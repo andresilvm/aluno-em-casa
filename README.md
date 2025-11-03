@@ -1,19 +1,40 @@
-# Exercicio-01
+# Dockerização API Aluno Online
 
-# Projeto estruturado utlizando o Spring Boot e adcionando Spring Web, Spring Data JPA, PostgreSQL Driver e Lombok como dependencias, para nos ajudar na arquitetura, organizacao e comunicacao com o banco de dados.
+## Descrição do Projeto
 
-# O projeto segue uma arquitetura tradicional de camadas, seguindo o padrao MVC (Model-View-Controller), modelo esse que viza facilitar tanto a configuracao do projeto quanto a manutencao do mesmo.
+Aplicação de uma universidade para ter o controle do alunado, desenvolvida em Java (Spring Boot), com containerização via Docker e Docker Compose.
+O projeto inclui um banco de dados PostgreSQL.
 
-# Model: A classe Aluno é uma entidade JPA gerenciada pelo Spring Data JPA.
-# Repository: AlunoRepository é responsável por lidar com operações de banco de dados e foi injetado no AlunoService.
-# Service: AlunoService contém a lógica de negócios e utiliza AlunoRepository para interagir com o banco de dados.
-# Controller: AlunoController expõe o endpoint /alunos para criação de alunos.
 
-# Criamos um metodo chamado criarAluno que é responsavel pela criacao de um novo registro da entidade Aluno na aplicacao.
-# Utilizamos o insominia para executar o metodo post e verificar se nossa aplicacao esta funcionando e se comunicando com o banco de dados.
-# Apos consulta no banco, foi verificado que o mesmo recebeu as informacoes que foram criadas no objeto aluno.
+## Estrutura da Branch
 
-![image](https://github.com/user-attachments/assets/634e76a6-83eb-4967-8c53-0df16414a461)
+- `main`: Branch principal de desenvolvimento, onde todas as alterações e novas funcionalidades serão implementadas e testadas.
 
-![image](https://github.com/user-attachments/assets/a6b47a30-191b-4d6b-943f-db538555c6f9)
+## Como Clonar o Projeto
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/andresilvm/aluno-em-casa.git
+
+2. **Acesse o diretório:**
+   ```bash
+   cd  aluno-em-casa
+
+## Estrutura dos Containers
+
+1. **app** → Aplicação Java (Spring Boot)
+
+2. **db** → Banco de dados PostgreSQL
+
+## Comando para subir os Containers
+
+docker compose up --build
+
+## Endpoint via INSOMNIA
+
+![813df160-8ed5-4da9-a3b8-21e9c6e0419b](https://github.com/user-attachments/assets/f13df4c0-792d-4d4a-9153-fadb33f4ecb5)
+
+
+
+
 
