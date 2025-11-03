@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Serviço do Banco de Dados Postgres
+  db:
+    image: postgres:13.22-alpine
+    container_name: aluno_db
+    ports:
+      # Mapeia a porta 5432 do seu PC (host) para a 5432 do container
+      - "5432:5432"
+    environment:
+      # Define as credenciais do banco
+      - POSTGRES_DB=aluno_em_casa_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1974 # Use a mesma senha definida no application.properties (DB_PASS)
+      - DB_HOST=db
+    volumes:
+      # Cria um volume para persistir os dados do banco
+      # (Este é o "plus" mencionado na atividade )
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck: # Adicione este bloco para verificar a saúde do DB
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  # Serviço da Aplicação Spring Boot
+  app:
+    container_name: aluno_app
+    # Constrói a imagem usando o Dockerfile no diretório atual (.)
+    build: .
+    ports:
+      # Mapeia a porta 8080 do seu PC para a 8080 do container
+      - "8080:8080"
+    # Garante que o serviço 'app' só vai subir DEPOIS que o 'db' estiver pronto
+    depends_on: # Mude o depends_on
+      db:
+        condition: service_healthy # Garante que só sobe se o DB estiver saudável
+    # Aqui passamos as variáveis de ambiente para a aplicação
+    environment:
+      - DB_HOST=db # IMPORTANTE: O host é o nome do serviço 'db' acima
+      - DB_PORT=5432
+      - DB_NAME=aluno_em_casa_db # Deve ser o mesmo do POSTGRES_DB
+      - DB_USER=postgres         # Deve ser o mesmo do POSTGRES_USER
+      - DB_PASS=1974         # Deve ser o mesmo do POSTGRES_PASSWORD
+
+# Define o volume nomeado que foi usado pelo serviço 'db'
+volumes:
+  postgres-data:
